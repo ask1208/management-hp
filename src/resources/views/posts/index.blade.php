@@ -22,7 +22,7 @@
                             カテゴリー:{{ $post->category->category_name }}
                           </h5>
                           <h5 class="card-title">
-                            投稿者:{{ $post->category->category_name }}
+                            投稿者:{{ $post->user->name }}
                           </h5>
                           <p class="card-text">{{ $post->content }}</p>
                           <a href="#" class="btn btn-primary">Go somewhere</a>
