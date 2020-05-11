@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
+
 use App\Post;
 
 class PostController extends Controller
@@ -15,13 +16,30 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        $posts ->load('category','user');
-        // dd($posts);
-    
+        $q = \Request::query();
+
+        
+        if(isset($q['category_id'])){
+            $posts = Post::latest()->where( $q['category_id'])->paginate(5);
+            $posts->load('category','user');
+            // dd($posts);
+            return view('posts.index',[
+                'posts' => $posts,
+                'category_id' => $q['category_id'],
+        ]);
+
+        
+
+        }else{
+            $posts = Post::latest()->paginate(5);
+            $posts->load('category','user');
+            // dd($posts);
             return view('posts.index',[
                 'posts' => $posts,
             ]);
+        }
+
+
     }
 
     /**
